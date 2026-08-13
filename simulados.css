@@ -1,0 +1,82 @@
+/* css/simulados.css
+   Estilos específicos de pages/simulados.html. Reaproveita classes já
+   definidas em questoes.css (alternativas, questao-meta, etc.) e
+   dashboard.css (grade-stats, barra-disciplina) — importados junto no HTML. */
+
+.quantidade-opcoes {
+  border: none;
+  padding: 0;
+  margin: 1.25rem 0;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.quantidade-opcoes legend {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.opcao-quantidade {
+  flex: 1 1 140px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: border-color var(--transicao), background-color var(--transicao);
+}
+
+.opcao-quantidade:has(input:checked) {
+  border-color: var(--cor-primaria);
+  background: var(--cor-primaria-fundo);
+}
+
+.opcao-quantidade input:disabled {
+  opacity: 0.5;
+}
+
+.opcao-quantidade:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.opcao-quantidade input {
+  accent-color: var(--cor-primaria);
+}
+
+.aviso {
+  font-size: 0.85rem;
+  color: var(--cor-aviso-texto);
+  background: var(--cor-aviso-fundo);
+  border: 1px solid var(--cor-aviso-borda);
+  border-radius: var(--raio);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.simulado-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 0.5rem;
+}
+
+.cronometro {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  color: var(--cor-primaria);
+  font-variant-numeric: tabular-nums;
+}
+
+.barra-trilha--progresso {
+  margin-bottom: 1.5rem;
+}

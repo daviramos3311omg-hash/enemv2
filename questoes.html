@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENEM Study — Questões</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/questoes.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <script>
+    // Aplica o tema salvo ANTES da primeira renderização (evita flash).
+    // Única exceção deliberada à regra de que só storage.js acessa
+    // localStorage: precisa rodar de forma síncrona no <head>.
+    try {
+      var config = JSON.parse(localStorage.getItem('enemStudy:config'));
+      if (config && config.tema === 'escuro') {
+        document.documentElement.setAttribute('data-tema', 'escuro');
+      }
+    } catch (erro) {
+      // localStorage indisponível — segue com o tema claro padrão.
+    }
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Pular para o conteúdo</a>
+  <header class="topo">
+    <div class="topo-linha">
+      <h1>ENEM Study</h1>
+      <button id="btn-tema" type="button" class="botao-tema" aria-label="Ativar tema escuro">🌙</button>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="nav-link" href="../index.html">Dashboard</a>
+      <a class="nav-link" href="questoes.html">Questões</a>
+      <a class="nav-link" href="simulados.html">Simulados</a>
+      <a class="nav-link" href="desempenho.html">Desempenho</a>
+      <a class="nav-link" href="favoritos.html">Favoritos</a>
+      <a class="nav-link" href="erros.html">Caderno de Erros</a>
+    </nav>
+  </header>
+
+  <main class="conteudo" id="main">
+    <div id="status" class="status" hidden role="status" aria-live="polite"></div>
+
+    <div id="banner-revisao" class="banner-revisao" hidden>
+      <span>Modo revisão: você está revendo uma questão específica.</span>
+      <button id="btn-sair-revisao" type="button" class="botao botao--secundario botao--pequeno">
+        Sair da revisão
+      </button>
+    </div>
+
+    <section class="cartao">
+      <div class="filtros">
+        <div class="campo">
+          <label for="filtro-area">Área</label>
+          <select id="filtro-area" disabled>
+            <option value="">Todas as áreas</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="filtro-ano">Ano</label>
+          <select id="filtro-ano" disabled>
+            <option value="">Todos os anos</option>
+          </select>
+        </div>
+        <button id="btn-nova-questao" type="button" class="botao botao--primario" disabled>
+          Nova questão
+        </button>
+      </div>
+    </section>
+
+    <section id="questao-container" class="cartao">
+      <p id="estado-vazio" class="estado-vazio">
+        Ajuste os filtros, se quiser, e clique em "Nova questão" para começar.
+      </p>
+
+      <div id="questao-conteudo" hidden>
+        <div class="questao-meta">
+          <span>ENEM <strong id="meta-ano"></strong></span>
+          <span id="meta-disciplina"></span>
+          <span id="meta-numero"></span>
+          <button id="btn-favoritar" type="button" class="botao-favorito" aria-pressed="false">
+            ☆ Favoritar
+          </button>
+        </div>
+
+        <div id="questao-contexto" class="questao-contexto" hidden></div>
+
+        <div id="questao-imagens" class="questao-imagens" hidden></div>
+
+        <p id="questao-enunciado" class="questao-enunciado" hidden></p>
+
+        <fieldset id="alternativas" class="alternativas">
+          <legend class="sr-only">Alternativas</legend>
+        </fieldset>
+
+        <div id="feedback" class="feedback" hidden role="status" aria-live="polite"></div>
+
+        <div class="acoes">
+          <button id="btn-confirmar" type="button" class="botao botao--primario" disabled>
+            Confirmar resposta
+          </button>
+          <button id="btn-proxima" type="button" class="botao botao--secundario" hidden>
+            Próxima questão
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Questões fornecidas pela API pública e open-source <a href="https://enem.dev" target="_blank" rel="noopener">ENEM.dev</a>.</p>
+  </footer>
+
+  <script type="module" src="../js/app.js"></script>
+  <script type="module" src="../js/questoes.js"></script>
+</body>
+</html>

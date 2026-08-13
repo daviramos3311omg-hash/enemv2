@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENEM Study — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <script>
+    // Aplica o tema salvo ANTES da primeira renderização, para evitar o
+    // "flash" de tema claro seguido de escuro. Única exceção deliberada à
+    // regra de que só storage.js acessa localStorage: precisa rodar de
+    // forma síncrona no <head>, antes de qualquer módulo ES carregar.
+    try {
+      var config = JSON.parse(localStorage.getItem('enemStudy:config'));
+      if (config && config.tema === 'escuro') {
+        document.documentElement.setAttribute('data-tema', 'escuro');
+      }
+    } catch (erro) {
+      // localStorage indisponível — segue com o tema claro padrão.
+    }
+  </script>
+</head>
+<body>
+  <div id="splash" class="splash" aria-hidden="true">
+    <span class="splash-texto">Feito por: <strong>@davi__szz</strong></span>
+  </div>
+  <a href="#main" class="skip-link">Pular para o conteúdo</a>
+  <header class="topo">
+    <div class="topo-linha">
+      <h1>ENEM Study</h1>
+      <button id="btn-tema" type="button" class="botao-tema" aria-label="Ativar tema escuro">🌙</button>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link" href="pages/questoes.html">Questões</a>
+      <a class="nav-link" href="pages/simulados.html">Simulados</a>
+      <a class="nav-link" href="pages/desempenho.html">Desempenho</a>
+      <a class="nav-link" href="pages/favoritos.html">Favoritos</a>
+      <a class="nav-link" href="pages/erros.html">Caderno de Erros</a>
+    </nav>
+  </header>
+
+  <main class="conteudo" id="main">
+    <section id="estado-sem-dados" class="cartao cartao--hero">
+      <div class="hero-ilustracao" aria-hidden="true">
+        <svg viewBox="0 0 220 170" width="190" height="147" role="img">
+          <rect class="hero-doc-fundo" x="30" y="14" width="118" height="148" rx="14"
+                transform="rotate(-7 89 88)" />
+          <rect class="hero-doc-linha" x="46" y="42" width="66" height="8" rx="4"
+                transform="rotate(-7 89 88)" />
+          <rect class="hero-doc-linha" x="46" y="60" width="82" height="8" rx="4"
+                transform="rotate(-7 89 88)" />
+          <rect class="hero-doc-linha" x="46" y="78" width="52" height="8" rx="4"
+                transform="rotate(-7 89 88)" />
+          <rect class="hero-doc-linha" x="46" y="96" width="70" height="8" rx="4"
+                transform="rotate(-7 89 88)" />
+          <circle class="hero-badge-circulo" cx="163" cy="118" r="30" />
+          <path class="hero-badge-check" d="M149 118l10 10 18-20" />
+          <circle class="hero-dot hero-dot--ambar" cx="26" cy="138" r="6" />
+          <circle class="hero-dot hero-dot--ambar" cx="196" cy="40" r="4" />
+          <circle class="hero-dot hero-dot--primaria" cx="16" cy="48" r="3.5" />
+        </svg>
+      </div>
+
+      <h2>Bem-vindo ao ENEM Study</h2>
+      <p class="texto-suave hero-descricao">
+        Pratique com questões reais do ENEM, monte simulados cronometrados e
+        acompanhe sua evolução por área — tudo em um só lugar, sem cadastro.
+      </p>
+
+      <div class="hero-recursos">
+        <div class="hero-recurso">
+          <svg class="hero-recurso-icone" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8.2 12.3l2.4 2.4 5.2-5.6" />
+          </svg>
+          <span>Questões reais, direto da API pública ENEM.dev</span>
+        </div>
+        <div class="hero-recurso">
+          <svg class="hero-recurso-icone" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3.5 2" />
+          </svg>
+          <span>Simulados com cronômetro e resultado por área</span>
+        </div>
+        <div class="hero-recurso">
+          <svg class="hero-recurso-icone" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M4 19V5M4 19h16M8 19v-6M12 19V9M16 19v-9" />
+          </svg>
+          <span>Dashboard com desempenho, metas e sequência de estudos</span>
+        </div>
+      </div>
+
+      <a href="pages/questoes.html" class="botao botao--primario botao--grande">Começar a estudar</a>
+    </section>
+
+    <div id="dashboard-conteudo" hidden>
+      <section class="grade-stats">
+        <div class="cartao stat-card">
+          <svg class="stat-icone" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8.2 12.3l2.4 2.4 5.2-5.6" />
+          </svg>
+          <span class="stat-label">Questões resolvidas</span>
+          <span id="stat-resolvidas" class="stat-valor">0</span>
+        </div>
+        <div class="cartao stat-card">
+          <svg class="stat-icone" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <circle cx="12" cy="12" r="5" />
+            <circle class="stat-icone-preenchido" cx="12" cy="12" r="1.3" />
+          </svg>
+          <span class="stat-label">Taxa de acerto</span>
+          <span id="stat-taxa-acerto" class="stat-valor">—</span>
+        </div>
+        <div class="cartao stat-card">
+          <svg id="icone-chama" class="stat-icone stat-icone-chama" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M12 2.5c1 3-1.8 4.2-1.8 7.2a3.8 3.8 0 0 0 7.6 0c0-1-.4-1.8-.9-1.9.4 1.9-.9 2.8-1.9 2.8-1.4 0-1.9-1.1-1.9-2.2 0-1.9 1.9-2.8.9-5.4-.9.7-1.9 1.9-1.9 5 0 1.7-1.4 2.5-2.3 1.6C8.5 8.1 9 5.3 12 2.5z" />
+          </svg>
+          <span class="stat-label">Sequência de estudos</span>
+          <span id="stat-streak" class="stat-valor">—</span>
+        </div>
+      </section>
+
+      <section class="cartao">
+        <div class="metas-cabecalho">
+          <h2>Metas</h2>
+          <button id="btn-editar-metas" type="button" class="botao botao--secundario botao--pequeno">
+            Editar metas
+          </button>
+        </div>
+
+        <p id="meta-texto-diaria" class="texto-suave">Meta diária: 0/30</p>
+        <div class="barra-trilha barra-trilha--meta">
+          <div id="meta-barra-diaria" class="barra-preenchimento" style="width: 0%"></div>
+        </div>
+
+        <p id="meta-texto-semanal" class="texto-suave meta-espaco-topo">Meta semanal: 0/150</p>
+        <div class="barra-trilha barra-trilha--meta">
+          <div id="meta-barra-semanal" class="barra-preenchimento" style="width: 0%"></div>
+        </div>
+
+        <form id="form-metas" class="form-metas" hidden>
+          <div class="campo">
+            <label for="input-meta-diaria">Meta diária (questões)</label>
+            <input id="input-meta-diaria" type="number" min="1" max="500" required />
+          </div>
+          <div class="campo">
+            <label for="input-meta-semanal">Meta semanal (questões)</label>
+            <input id="input-meta-semanal" type="number" min="1" max="2000" required />
+          </div>
+          <button type="submit" class="botao botao--primario botao--pequeno">Salvar</button>
+        </form>
+      </section>
+
+      <section class="cartao">
+        <h2>Desempenho por área</h2>
+        <div id="desempenho-por-disciplina"></div>
+        <a href="pages/desempenho.html" class="link-ver-mais">Ver desempenho detalhado →</a>
+      </section>
+
+      <div id="recomendacoes" class="recomendacoes" hidden></div>
+
+      <section class="cartao">
+        <h2>Evolução da taxa de acerto</h2>
+        <div id="grafico-evolucao" class="grafico-evolucao"></div>
+      </section>
+
+      <section class="cartao">
+        <h2>Atividade recente</h2>
+        <div id="atividade-recente"></div>
+      </section>
+
+      <div class="acoes-dashboard">
+        <a href="pages/questoes.html" class="botao botao--primario botao--grande">
+          Começar a estudar
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>Questões fornecidas pela API pública e open-source <a href="https://enem.dev" target="_blank" rel="noopener">ENEM.dev</a>.</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

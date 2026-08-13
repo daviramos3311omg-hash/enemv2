@@ -1,0 +1,219 @@
+/* css/questoes.css
+   Estilos específicos de pages/questoes.html: filtros, meta da questão,
+   contexto, imagens, alternativas e feedback. Depende dos tokens e classes
+   base definidos em global.css. */
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  flex: 1 1 160px;
+}
+
+.campo label {
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.campo select {
+  font: inherit;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--raio);
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-cartao);
+  color: var(--cor-texto);
+}
+
+.campo select:disabled {
+  opacity: 0.6;
+}
+
+.filtros .botao {
+  flex: 0 0 auto;
+}
+
+.estado-vazio {
+  color: var(--cor-texto-suave);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.questao-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.botao-favorito {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  text-transform: none;
+  letter-spacing: normal;
+  cursor: pointer;
+}
+
+.botao-favorito--ativo {
+  color: #a3781a;
+  border-color: #a3781a;
+  background: #fbf3e3;
+}
+
+.questao-contexto {
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.questao-contexto p {
+  margin: 0 0 0.75rem;
+}
+
+.questao-contexto p:last-child {
+  margin-bottom: 0;
+}
+
+.questao-imagens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.questao-imagens img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--raio);
+  border: 1px solid var(--cor-borda);
+}
+
+.questao-enunciado {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0 0 1.25rem;
+  white-space: pre-wrap;
+}
+
+.alternativas {
+  border: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.alternativa {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.alternativa:hover {
+  border-color: var(--cor-primaria);
+}
+
+.alternativa:has(input:focus-visible) {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 2px;
+}
+
+.alternativa input[type="radio"] {
+  margin-top: 0.2rem;
+  accent-color: var(--cor-primaria);
+}
+
+.alternativa-letra {
+  font-weight: 700;
+  color: var(--cor-primaria);
+  min-width: 1.2rem;
+}
+
+.alternativa-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.alternativa-conteudo img {
+  max-width: 100%;
+  border-radius: var(--raio);
+}
+
+.alternativa--correta {
+  border-color: var(--cor-acerto);
+  background: var(--cor-acerto-fundo);
+}
+
+.alternativa--incorreta {
+  border-color: var(--cor-erro);
+  background: var(--cor-erro-fundo);
+}
+
+.feedback {
+  padding: 0.85rem 1rem;
+  border-radius: var(--raio);
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  animation: feedback-entrada 0.3s ease;
+}
+
+@keyframes feedback-entrada {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.feedback--acerto {
+  color: var(--cor-acerto);
+  background: var(--cor-acerto-fundo);
+}
+
+.feedback--erro {
+  color: var(--cor-erro);
+  background: var(--cor-erro-fundo);
+}
+
+.acoes {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .questao-meta {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENEM Study — Desempenho</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/listas.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <script>
+    // Aplica o tema salvo ANTES da primeira renderização (evita flash).
+    // Única exceção deliberada à regra de que só storage.js acessa
+    // localStorage: precisa rodar de forma síncrona no <head>.
+    try {
+      var config = JSON.parse(localStorage.getItem('enemStudy:config'));
+      if (config && config.tema === 'escuro') {
+        document.documentElement.setAttribute('data-tema', 'escuro');
+      }
+    } catch (erro) {
+      // localStorage indisponível — segue com o tema claro padrão.
+    }
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Pular para o conteúdo</a>
+  <header class="topo">
+    <div class="topo-linha">
+      <h1>ENEM Study</h1>
+      <button id="btn-tema" type="button" class="botao-tema" aria-label="Ativar tema escuro">🌙</button>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="nav-link" href="../index.html">Dashboard</a>
+      <a class="nav-link" href="questoes.html">Questões</a>
+      <a class="nav-link" href="simulados.html">Simulados</a>
+      <a class="nav-link" href="desempenho.html">Desempenho</a>
+      <a class="nav-link" href="favoritos.html">Favoritos</a>
+      <a class="nav-link" href="erros.html">Caderno de Erros</a>
+    </nav>
+  </header>
+
+  <main class="conteudo" id="main">
+    <section id="estado-sem-dados" class="cartao cartao--central">
+      <p>Você ainda não respondeu nenhuma questão.</p>
+      <a href="questoes.html" class="botao botao--primario">Começar a estudar</a>
+    </section>
+
+    <div id="desempenho-conteudo" hidden>
+      <section class="grade-stats">
+        <div class="cartao stat-card">
+          <span class="stat-label">Total de questões</span>
+          <span id="resumo-total" class="stat-valor">0</span>
+        </div>
+        <div class="cartao stat-card">
+          <span class="stat-label">Acertos</span>
+          <span id="resumo-acertos" class="stat-valor">0</span>
+        </div>
+        <div class="cartao stat-card">
+          <span class="stat-label">Taxa de acerto geral</span>
+          <span id="resumo-taxa" class="stat-valor">0%</span>
+        </div>
+      </section>
+
+      <section class="cartao">
+        <h2>Desempenho por área</h2>
+        <div class="tabela-scroll">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th scope="col">Área</th>
+                <th scope="col">Questões</th>
+                <th scope="col">Acertos</th>
+                <th scope="col">Taxa de acerto</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-disciplinas"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="cartao">
+        <h2>Questões por dia (últimos 14 dias)</h2>
+        <div id="grafico-questoes-por-dia" class="grafico-barras"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>Questões fornecidas pela API pública e open-source <a href="https://enem.dev" target="_blank" rel="noopener">ENEM.dev</a>.</p>
+  </footer>
+
+  <script type="module" src="../js/app.js"></script>
+  <script type="module" src="../js/desempenho.js"></script>
+</body>
+</html>
