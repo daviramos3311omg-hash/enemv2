@@ -19,6 +19,7 @@ const CHAVES = {
   streak: `${PREFIXO}streak`,
   config: `${PREFIXO}config`,
   simulados: `${PREFIXO}simulados`,
+  resumo: `${PREFIXO}resumo`,
 };
 
 function ler(chave, valorPadrao) {
@@ -326,4 +327,25 @@ export function registrarSimulado(resultado) {
     ...resultado,
   });
   escrever(CHAVES.simulados, simulados);
+}
+
+// --- resumo de assuntos (checklist de estudo) ------------------------------
+//
+// Guarda só os itens marcados, como um mapa { id: true }. O id de cada item
+// é definido em resumo.js (ex.: "matematica:0"), combinando a categoria com
+// a posição do tópico — evita colisão mesmo quando o mesmo texto aparece em
+// mais de uma lista (ex.: "Meio ambiente" em Geografia e em Redação).
+
+export function obterResumoMarcados() {
+  return ler(CHAVES.resumo, {});
+}
+
+export function definirResumoItem(id, marcado) {
+  const marcados = obterResumoMarcados();
+  if (marcado) {
+    marcados[id] = true;
+  } else {
+    delete marcados[id];
+  }
+  escrever(CHAVES.resumo, marcados);
 }
