@@ -1,0 +1,112 @@
+/* css/resumo.css
+   Estilos específicos de pages/resumo.html: blocos de prioridade e
+   acordeões de disciplina com checklist. Depende de global.css (tokens) e
+   dashboard.css (barra-trilha/barra-preenchimento), carregados junto. */
+
+.resumo-bloco {
+  margin-bottom: 1.25rem;
+}
+
+.resumo-bloco:last-child {
+  margin-bottom: 0;
+}
+
+.resumo-bloco-cabecalho {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.resumo-bloco-cabecalho h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-family: var(--fonte-titulo);
+}
+
+.resumo-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.resumo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--raio-pequeno);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color var(--transicao);
+}
+
+.resumo-item:hover {
+  background: var(--cor-fundo);
+}
+
+.resumo-item input[type="checkbox"] {
+  accent-color: var(--cor-primaria);
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+}
+
+.resumo-item:has(input:checked) span {
+  color: var(--cor-texto-suave);
+  text-decoration: line-through;
+}
+
+.resumo-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.resumo-disciplina {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 0.85rem 1rem;
+}
+
+.resumo-disciplina + .resumo-disciplina {
+  margin-top: 0;
+}
+
+.resumo-disciplina summary {
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.resumo-disciplina summary::-webkit-details-marker {
+  display: none;
+}
+
+.resumo-disciplina summary > span:first-child {
+  flex: 1;
+}
+
+.resumo-disciplina summary::after {
+  content: '▸';
+  color: var(--cor-texto-suave);
+  transition: transform var(--transicao);
+}
+
+.resumo-disciplina[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.resumo-disciplina[open] summary {
+  margin-bottom: 0.75rem;
+}
+
+.resumo-progresso-texto {
+  color: var(--cor-texto-suave);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
