@@ -32,7 +32,15 @@ function contarProgresso(ids, marcados) {
   return { total, feitos };
 }
 
-function criarLinhaChecklist(id, texto, marcados) {
+// `topico` pode ser uma string simples (itens da seção Prioridade, sem
+// resumo próprio) ou um objeto { nome, resumo } (itens por disciplina).
+function criarLinhaTopico(id, topico, marcados) {
+  const nome = typeof topico === 'string' ? topico : topico.nome;
+  const resumo = typeof topico === 'string' ? null : topico.resumo;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'resumo-topico';
+
   const label = document.createElement('label');
   label.className = 'resumo-item';
 
@@ -45,10 +53,26 @@ function criarLinhaChecklist(id, texto, marcados) {
   });
 
   const span = document.createElement('span');
-  span.textContent = texto;
+  span.textContent = nome;
 
   label.append(input, span);
-  return label;
+  wrapper.appendChild(label);
+
+  if (resumo) {
+    const detalhes = document.createElement('details');
+    detalhes.className = 'resumo-topico-resumo';
+
+    const sumario = document.createElement('summary');
+    sumario.textContent = 'Ver resumo';
+
+    const paragrafo = document.createElement('p');
+    paragrafo.textContent = resumo;
+
+    detalhes.append(sumario, paragrafo);
+    wrapper.appendChild(detalhes);
+  }
+
+  return wrapper;
 }
 
 function montarPrioridade(marcados) {
@@ -72,7 +96,7 @@ function montarPrioridade(marcados) {
     lista.className = 'resumo-lista';
     nivel.topicos.forEach((topico, i) => {
       const id = `prioridade-${nivel.id}:${i}`;
-      lista.appendChild(criarLinhaChecklist(id, topico, marcados));
+      lista.appendChild(criarLinhaTopico(id, topico, marcados));
     });
 
     bloco.append(cabecalho, lista);
@@ -101,7 +125,7 @@ function montarCategorias(marcados) {
     lista.className = 'resumo-lista';
     categoria.topicos.forEach((topico, i) => {
       const id = `${categoria.id}:${i}`;
-      lista.appendChild(criarLinhaChecklist(id, topico, marcados));
+      lista.appendChild(criarLinhaTopico(id, topico, marcados));
     });
     details.appendChild(lista);
 
