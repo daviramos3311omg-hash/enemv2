@@ -31,6 +31,10 @@
   gap: 0.3rem;
 }
 
+.resumo-topico {
+  border-radius: var(--raio-pequeno);
+}
+
 .resumo-item {
   display: flex;
   align-items: center;
@@ -56,6 +60,37 @@
 .resumo-item:has(input:checked) span {
   color: var(--cor-texto-suave);
   text-decoration: line-through;
+}
+
+.resumo-topico-resumo {
+  margin: 0 0.65rem 0.5rem;
+}
+
+.resumo-topico-resumo summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cor-primaria);
+  list-style: none;
+}
+
+.resumo-topico-resumo summary::-webkit-details-marker {
+  display: none;
+}
+
+.resumo-topico-resumo summary::before {
+  content: '▸ ';
+}
+
+.resumo-topico-resumo[open] summary::before {
+  content: '▾ ';
+}
+
+.resumo-topico-resumo p {
+  margin: 0.4rem 0 0.3rem;
+  font-size: 0.85rem;
+  color: var(--cor-texto);
+  line-height: 1.5;
 }
 
 .resumo-categorias {
